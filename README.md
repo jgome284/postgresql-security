@@ -122,3 +122,34 @@ Finally, add a default-deny rule to deny all other connections.
 host all all all reject
 
 Overall, this configuration file allows users in the `g_school` group to connect as either `students` or `teachers` from hosts in the `samenet` network, while requiring SSL for connections as the `u_principal_skinner` role. All other connection attempts are rejected.
+
+## Implement Environment Variables
+
+You can create an environment variable using the format: NAME=VALUE in .env.
+
+For example, your .env file could look like so...
+
+```dotenv
+# NOTE - FAKE DATA FOR DEMONSTRATION ONLY...
+
+# Postgres API Key (students)
+POSTGRES_API_KEY=gVvzJqrWLL6MXLzHeHERnKp
+
+# District API Key (teachers)
+DISTRICT_API_KEY=zsi9DeEcewB7MsgzPy2zxsp
+```
+
+These variables can be used in your scripts with the dotenv package. For example in a JavaScript file:
+
+```JavaScript
+// Import the dotenv package
+import dotenv from "dotenv"
+
+// Inject environment variables
+dotenv.config()
+
+// print API keys that are injected as environment variables.
+console.log(process.env.POSTGRES_API_KEY);
+console.log(process.env.DISTRICT_API_KEY);
+
+```
