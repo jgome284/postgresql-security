@@ -153,3 +153,15 @@ console.log(process.env.POSTGRES_API_KEY);
 console.log(process.env.DISTRICT_API_KEY);
 
 ```
+
+## Prevent Uploading Sensitive Information
+
+Lastly, we need to make sure the Postgres configuration files and the environment variables are not uploaded to the public repository. Using .gitignore, ignore the following files: .env, pg_hba.conf, and postgresql.conf.
+
+.gitignore should contain:
+
+```.gitignore
+.env
+pg_hba.conf
+postgresql.conf
+```
