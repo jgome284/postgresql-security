@@ -66,3 +66,29 @@ Remove all public permissions for the tables, students and teachers. For this ta
 and
 
 `REVOKE ALL ON teachers FROM PUBLIC;`
+
+## Configure Postgres Settings
+
+### Listen Addresses
+
+Next, we need to make sure the Postgres server does not accept connections from every IP address. Edit postgresql.conf to change the listen_addresses parameter so that the server only accepts connections from the school network ( localhost) and the district network (235.84.86.65).
+
+Set the listen_addresses parameter in postgresql.conf to 'localhost, 235.84.86.65'.
+
+listen_addresses = 'localhost, 235.84.86.65'
+
+### Port
+
+The server currently listens on port 5432, which is very dangerous because it’s the default Postgres port. Change the port parameter to 61342,
+
+Hint: Set the port parameter in postgresql.conf to 61342.
+
+port = 61342
+
+### Enable SSL
+
+Enable SSL on the server.
+
+Hint: Set the ssl parameter in postgresql.conf to on.
+
+ssl = on
