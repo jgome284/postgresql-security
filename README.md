@@ -92,3 +92,33 @@ Enable SSL on the server.
 Hint: Set the ssl parameter in postgresql.conf to on.
 
 ssl = on
+
+## Configure Postgres Host-Based Authentication
+
+Now that the server settings are configured, move to pg_hba.conf. This `pg_hba.conf` file is a configuration file for PostgreSQL's host-based authentication. It contains a set of rules that determine how clients are allowed to connect to the PostgreSQL database server.
+
+Add a rule to allow members of the g_school group on the school’s local network to access the students database. SSL is not necessary. We should use SHA-256 password authentication.
+
+Remember, the order is
+
+`connection_type  db  user  address  auth_method  [auth_options]`
+
+This gives us:
+
+`host students +g_school samenet scram-sha-256`
+
+Add another rule using the same configuration as the last rule but change the database to teachers.
+
+`host teachers +g_school samenet scram-sha-256`
+
+Add a rule for the principal’s account, u_principal_skinner, to access all databases from any address. Use SSL and SHA-256 password authentication.
+
+`hostssl all u_principal_skinner all scram-sha-256`
+
+Add a rule for the members of the school district in the group, g_district, to access all databases from the district’s network, 235.84.86.65. Use SSL and SHA-256 password authentication.
+
+Finally, add a default-deny rule to deny all other connections.
+
+host all all all reject
+
+Overall, this configuration file allows users in the `g_school` group to connect as either `students` or `teachers` from hosts in the `samenet` network, while requiring SSL for connections as the `u_principal_skinner` role. All other connection attempts are rejected.
